@@ -17,12 +17,13 @@ describe('Visual Regression Tests', () => {
     test('should match desktop homepage screenshot', async () => {
         await page.setViewportSize({ width: 1920, height: 1080 });
         await page.waitForLoadState('networkidle');
-          // Wait for animations to complete
+        // Wait for animations to complete
         await page.waitForTimeout(1000);
         
         const screenshot = await page.screenshot({ 
             fullPage: true,
-            path: 'tests/screenshots/desktop-homepage.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/desktop-homepage.png' })
         });
         
         expect(screenshot).toBeDefined();
@@ -35,7 +36,8 @@ describe('Visual Regression Tests', () => {
         
         const screenshot = await page.screenshot({ 
             fullPage: true,
-            path: 'tests/screenshots/tablet-homepage.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/tablet-homepage.png' })
         });
         
         expect(screenshot).toBeDefined();
@@ -48,7 +50,8 @@ describe('Visual Regression Tests', () => {
         
         const screenshot = await page.screenshot({ 
             fullPage: true,
-            path: 'tests/screenshots/mobile-homepage.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/mobile-homepage.png' })
         });
         
         expect(screenshot).toBeDefined();
@@ -62,7 +65,8 @@ describe('Visual Regression Tests', () => {
         await page.waitForTimeout(500);
         
         const screenshot = await page.screenshot({ 
-            path: 'tests/screenshots/mobile-navigation.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/mobile-navigation.png' })
         });
         
         expect(screenshot).toBeDefined();
@@ -77,7 +81,8 @@ describe('Visual Regression Tests', () => {
         
         const contactSection = await page.$('#contact');
         const screenshot = await contactSection.screenshot({
-            path: 'tests/screenshots/contact-section.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/contact-section.png' })
         });
         
         expect(screenshot).toBeDefined();
@@ -92,11 +97,14 @@ describe('Visual Regression Tests', () => {
         
         const projectsSection = await page.$('#projects');
         const screenshot = await projectsSection.screenshot({
-            path: 'tests/screenshots/projects-section.png'
+            // Only save screenshot file if not in CI environment
+            ...(process.env.CI ? {} : { path: 'tests/screenshots/projects-section.png' })
         });
         
         expect(screenshot).toBeDefined();
-    });    test('should show hover effects on project cards', async () => {
+    });
+
+    test('should show hover effects on project cards', async () => {
         await page.setViewportSize({ width: 1920, height: 1080 });
         await page.waitForLoadState('networkidle');
         await page.waitForTimeout(500);
@@ -104,14 +112,18 @@ describe('Visual Regression Tests', () => {
         // Check if project cards exist
         const projectCards = await page.$$('.project-card');
         expect(projectCards.length).toBeGreaterThan(0);
-    });    test('should display skills section with proper layout', async () => {
+    });
+
+    test('should display skills section with proper layout', async () => {
         await page.setViewportSize({ width: 1920, height: 1080 });
         await page.waitForLoadState('networkidle');
         
         // Check if skills section exists
         const skillsSection = await page.$('#skills');
         expect(skillsSection).toBeTruthy();
-    });test('should handle dark theme correctly', async () => {
+    });
+
+    test('should handle dark theme correctly', async () => {
         await page.setViewportSize({ width: 1920, height: 1080 });
         await page.waitForLoadState('networkidle');
         await page.waitForTimeout(1000);
