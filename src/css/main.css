@@ -442,12 +442,33 @@ body {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-medium);
     border: 1px solid #333;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(78, 205, 196, 0.08) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-heavy);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 212, 255, 0.25), 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 212, 255, 0.5);
+}
+
+.project-card:hover::before {
+    opacity: 1;
 }
 
 .project-header {
@@ -455,6 +476,8 @@ body {
     justify-content: space-between;
     align-items: start;
     margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
 }
 
 .project-header h3 {
@@ -471,10 +494,29 @@ body {
 .project-link {
     color: var(--text-secondary);
     font-size: 1.25rem;
-    transition: var(--transition);
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-link:hover {
+    color: var(--primary-color);
+    background: rgba(0, 212, 255, 0.15);
+    transform: scale(1.15) rotate(8deg);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.project-header h3 {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .project-header h3 {
     color: var(--primary-color);
 }
 
@@ -482,12 +524,16 @@ body {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     line-height: 1.6;
+    position: relative;
+    z-index: 2;
 }
 
 .project-tech {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .tech-tag {
@@ -586,6 +632,18 @@ body {
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: var(--text-muted);
+}
+
+/* Ensuring content visibility even if JS doesn't load properly */
+.animate-on-scroll,
+.animate {
+    opacity: 1 !important; /* Override any JS-set opacity */
+}
+
+/* JS will remove this class once initialized */
+.animate-on-scroll.no-js,
+.animate.no-js {
+    transform: none !important; /* Ensure no unwanted transformations */
 }
 
 /* Accessibility - Screen reader only text */

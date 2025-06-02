@@ -49,9 +49,14 @@ class AnimationController {
         const animationType = element.getAttribute('data-animation') || 'fadeInUp';
         const delay = element.getAttribute('data-delay') || 0;
         
-        setTimeout(() => {
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        // Ensure content is initially visible
+        if (element.style.opacity === '0') {
             element.style.opacity = '1';
+        }
+        
+        // Only add subtle animations without hiding content
+        setTimeout(() => {
+            element.style.transition = 'transform 0.6s ease';
             element.style.transform = 'translateY(0)';
             element.classList.add('animated', animationType);
         }, delay);
@@ -127,17 +132,9 @@ class AnimationController {
 
     // Enhanced hover animations
     initializeHoverAnimations() {
-        // Project cards hover effects
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                this.animateProjectCard(card, 'enter');
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                this.animateProjectCard(card, 'leave');
-            });
-        });
-
+        // Let CSS handle project card hover effects for better performance
+        // Project cards now use pure CSS hover animations
+        
         // Skill tags hover effects
         document.querySelectorAll('.skill-tag').forEach(tag => {
             tag.addEventListener('mouseenter', () => {
@@ -282,28 +279,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // Setup initial element classes for animations
     const setupAnimationClasses = () => {
         // Add animation classes to specific elements
+        // Allow stat cards to be visible by default (fix for disappearing content)  
         document.querySelectorAll('.stat-card').forEach((el, i) => {
             el.classList.add('animate-on-scroll');
             el.setAttribute('data-animation', 'fadeInUp');
             el.setAttribute('data-delay', i * 100);
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
+            // Don't set opacity to 0 - let content be visible
         });
         
+        // Allow project cards to be visible by default (fix for disappearing content)
         document.querySelectorAll('.project-card').forEach((el, i) => {
             el.classList.add('animate-on-scroll');
             el.setAttribute('data-animation', 'fadeInUp');
             el.setAttribute('data-delay', i * 150);
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
+            // Don't set opacity to 0 - let content be visible
+            // No transform by default to prevent content jumping
         });
         
+        // Allow skill tags to be visible by default (fix for disappearing content)
         document.querySelectorAll('.skill-tag').forEach((el, i) => {
             el.classList.add('animate-on-scroll');
             el.setAttribute('data-animation', 'fadeInUp');
             el.setAttribute('data-delay', i * 50);
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
+            // Don't set opacity to 0 - let content be visible
         });
         
         // Handle existing .animate elements
