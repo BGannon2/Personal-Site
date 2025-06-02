@@ -54,7 +54,8 @@ module.exports = {
         compress: true,
         port: 9000,
         hot: true,
-        open: true,
+        open: false, // Don't auto-open in CI
+        allowedHosts: 'all',
     },
     optimization: {
         minimize: true,
