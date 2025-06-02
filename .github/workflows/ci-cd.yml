@@ -47,8 +47,8 @@ jobs:
         # Run linting (will pass if no .eslintrc exists)
         npx eslint src/ --ext .js || echo "ESLint not configured, skipping..."
       continue-on-error: true
-      
-    - name: 🧪 Run Tests
+        
+    - name: 🧪 Run Tests (MANDATORY)
       run: |
         if [ -d "tests" ]; then
           cd tests
@@ -56,12 +56,13 @@ jobs:
             npm ci
             npm test
           else
-            echo "No package.json found in tests directory"
+            echo "❌ No package.json found in tests directory"
+            exit 1
           fi
         else
-          echo "No tests directory found, skipping tests"
+          echo "❌ No tests directory found - tests are required for deployment"
+          exit 1
         fi
-      continue-on-error: true
         
     - name: 🏗️ Build for Production
       run: npm run build
@@ -127,7 +128,7 @@ jobs:
       run: |
         npx audit-ci --config .audit-ci.json || echo "audit-ci not configured"
 
-  # Job 3: Deploy to GitHub Pages
+  # Job 3: Deploy to GitHub Pages (ONLY if tests pass)
   deploy:
     runs-on: ubuntu-latest
     needs: [build-and-test, security-checks]
@@ -213,3 +214,9 @@ jobs:
       run: |
         echo "❌ Deployment failed!"
         echo "Please check the logs above for details."
+        
+    - name: ⚠️ Test Failure Notification
+      if: needs.build-and-test.result == 'failure'
+      run: |
+        echo "❌ Tests failed! Deployment was blocked."
+        echo "Please fix the failing tests before deployment can proceed."
