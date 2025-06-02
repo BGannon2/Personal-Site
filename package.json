@@ -7,7 +7,9 @@
     "build": "webpack --mode production",
     "start": "webpack serve --mode development",
     "serve:prod": "node production-server.js",
-    "build:serve": "npm run build && npm run serve:prod"
+    "build:serve": "npm run build && npm run serve:prod",
+    "lighthouse": "npx lhci autorun --config=.lighthouserc.json",
+    "lighthouse:local": "npx serve dist -p 8080 & npx lhci autorun --config=.lighthouserc-local.json"
   },
   "keywords": [
     "DevOps",
