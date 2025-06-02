@@ -5,7 +5,9 @@
   "main": "src/index.html",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve --mode development"
+    "start": "webpack serve --mode development",
+    "serve:prod": "node production-server.js",
+    "build:serve": "npm run build && npm run serve:prod"
   },
   "keywords": [
     "DevOps",
