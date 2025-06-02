@@ -197,9 +197,17 @@ jobs:
     - name: 📦 Install Lighthouse CI
       run: npm install -g @lhci/cli@0.12.x
       
-    - name: 🏃‍♂️ Run Lighthouse CI
+    - name: ⏳ Wait for deployment to be ready
       run: |
-        lhci autorun || echo "Lighthouse CI failed - site might still be deploying"
+        echo "Waiting for site to be available..."
+        sleep 60
+        
+    - name: 🏃‍♂️ Run Lighthouse CI against deployed site
+      run: |
+        # Run Lighthouse against the deployed GitHub Pages site
+        SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+        echo "Testing deployed site at: $SITE_URL"
+        npx lhci autorun --url="$SITE_URL" || echo "Lighthouse CI failed - site might still be deploying"
       env:
         LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
