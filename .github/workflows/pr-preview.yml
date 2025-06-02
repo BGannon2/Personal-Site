@@ -1,0 +1,96 @@
+name: PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🔄 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📦 Install Dependencies
+      run: npm ci
+      
+    - name: 🧪 Run Tests
+      run: |
+        cd tests
+        npm ci
+        npm test
+        
+    - name: 🏗️ Build for Preview
+      run: npm run build
+      
+    - name: 📤 Upload Preview Build
+      uses: actions/upload-artifact@v4
+      with:
+        name: pr-preview-${{ github.event.number }}
+        path: dist/
+        retention-days: 7
+        
+    - name: 📝 Comment PR with Preview Info
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const prNumber = context.issue.number;
+          const comment = `## 🔍 PR Preview Build Complete
+          
+          ✅ **Build Status:** Successful
+          📦 **Artifact:** \`pr-preview-${prNumber}\`
+          🧪 **Tests:** Passed
+          
+          ### 📋 Build Summary
+          - **Commit:** ${context.sha.substring(0, 7)}
+          - **Branch:** ${context.ref}
+          - **Build Time:** ${new Date().toISOString()}
+          
+          ### 🚀 Next Steps
+          1. Download the build artifact to test locally
+          2. Review the changes in the diff
+          3. Test on multiple devices/browsers
+          
+          ### 🛠️ Local Testing
+          \`\`\`bash
+          # Download artifact and serve locally
+          python -m http.server 8000
+          # or
+          npx serve dist/
+          \`\`\`
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: prNumber,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+          
+    - name: 🔍 Run Additional PR Checks
+      run: |
+        echo "🔍 Running additional PR validation..."
+        
+        # Check if critical files were modified
+        if git diff --name-only origin/main...HEAD | grep -E "(package\.json|webpack\.config\.js|\.github/)"; then
+          echo "⚠️  Critical files modified - extra review recommended"
+        fi
+        
+        # Check bundle size (if dist directory exists)
+        if [ -d "dist" ]; then
+          echo "📊 Bundle size analysis:"
+          du -sh dist/
+          find dist -name "*.js" -exec wc -c {} + | sort -n
+        fi

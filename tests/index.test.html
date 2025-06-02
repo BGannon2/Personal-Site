@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website Tests</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .test-pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .run-tests-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .run-tests-btn:hover {
+            background: #0056b3;
+        }
+        #test-results {
+            min-height: 200px;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 DevOps Portfolio Website Test Suite</h1>
+        <p>Comprehensive testing for Brendan Gannon's portfolio website functionality, performance, and accessibility.</p>
+        
+        <button class="run-tests-btn" onclick="runAllTests()">▶️ Run All Tests</button>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="total-tests">0</div>
+                <div>Total Tests</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="passed-tests">0</div>
+                <div>Passed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="failed-tests">0</div>
+                <div>Failed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="success-rate">0%</div>
+                <div>Success Rate</div>
+            </div>
+        </div>
+
+        <div id="test-results"></div>
+
+        <div class="test-section">
+            <h3>🔍 Website Preview</h3>
+            <p>Live preview of the portfolio website being tested:</p>
+            <iframe src="../src/index.html" title="Portfolio Website Preview"></iframe>
+        </div>
+    </div>
+
+    <script>
+        let testResults = [];
+        let totalTests = 0;
+        let passedTests = 0;
+        let failedTests = 0;
+
+        function logTest(testName, passed, message) {
+            totalTests++;
+            if (passed) {
+                passedTests++;
+                testResults.push(`<div class="test-result test-pass">✅ ${testName}: ${message}</div>`);
+            } else {
+                failedTests++;
+                testResults.push(`<div class="test-result test-fail">❌ ${testName}: ${message}</div>`);
+            }
+            updateStats();
+        }
+
+        function logInfo(message) {
+            testResults.push(`<div class="test-result test-info">ℹ️ ${message}</div>`);
+        }
+
+        function updateStats() {
+            document.getElementById('total-tests').textContent = totalTests;
+            document.getElementById('passed-tests').textContent = passedTests;
+            document.getElementById('failed-tests').textContent = failedTests;
+            const successRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+            document.getElementById('success-rate').textContent = successRate + '%';
+        }
+
+        async function runAllTests() {
+            // Reset test results
+            testResults = [];
+            totalTests = 0;
+            passedTests = 0;
+            failedTests = 0;
+            
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="test-info">🔄 Running tests...</div>';
+
+            // Load the website in a hidden iframe for testing
+            const iframe = document.createElement('iframe');
+            iframe.src = '../src/index.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+
+            iframe.onload = function() {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                logInfo('=== HTML Structure Tests ===');
+                testHTMLStructure(doc);
+                
+                logInfo('=== Content Tests ===');
+                testContent(doc);
+                
+                logInfo('=== CSS Tests ===');
+                testCSS(doc);
+                
+                logInfo('=== JavaScript Tests ===');
+                testJavaScript(doc);
+                
+                logInfo('=== Accessibility Tests ===');
+                testAccessibility(doc);
+                
+                logInfo('=== Performance Tests ===');
+                testPerformance(doc);
+                
+                logInfo('=== Responsive Design Tests ===');
+                testResponsiveDesign(doc);
+
+                // Display results
+                resultsDiv.innerHTML = testResults.join('');
+                
+                // Clean up
+                document.body.removeChild(iframe);
+            };
+        }
+
+        function testHTMLStructure(doc) {
+            // Test essential HTML elements
+            logTest('HTML5 DOCTYPE', doc.doctype && doc.doctype.name === 'html', 'Valid HTML5 DOCTYPE found');
+            logTest('Title Tag', doc.title.includes('Brendan Gannon'), 'Page title contains "Brendan Gannon"');
+            logTest('Meta Viewport', doc.querySelector('meta[name="viewport"]') !== null, 'Viewport meta tag present');
+            logTest('Meta Description', doc.querySelector('meta[name="description"]') !== null, 'Meta description present');
+            
+            // Test navigation
+            const nav = doc.querySelector('nav.navbar');
+            logTest('Navigation Present', nav !== null, 'Main navigation found');
+            logTest('Navigation Links', doc.querySelectorAll('.nav-link').length >= 5, 'All navigation links present');
+            
+            // Test main sections
+            const sections = ['#home', '#about', '#skills', '#projects', '#contact'];
+            sections.forEach(section => {
+                const element = doc.querySelector(section);
+                logTest(`Section ${section}`, element !== null, `${section} section found`);
+            });
+        }
+
+        function testContent(doc) {
+            // Test hero section content
+            const heroTitle = doc.querySelector('.hero-title');
+            logTest('Hero Title', heroTitle && heroTitle.textContent.includes('Principal Lead DevOps Engineer'), 'Hero title contains correct job title');
+            
+            // Test contact information
+            const emailLink = doc.querySelector('a[href="mailto:Brendan@BGannon.dev"]');
+            logTest('Email Contact', emailLink !== null, 'Email contact link present');
+            
+            const phoneLink = doc.querySelector('a[href="tel:+12403461144"]');
+            logTest('Phone Contact', phoneLink !== null, 'Phone contact link present');            const githubLink = doc.querySelector('a[href="https://github.com/BGannon2"]');
+            logTest('GitHub Link', githubLink !== null, 'GitHub profile link present');
+            
+            const linkedinLink = doc.querySelector('a[href="https://www.linkedin.com/in/brendanrgannon/"]');
+            logTest('LinkedIn Link', linkedinLink !== null, 'LinkedIn profile link present');
+            
+            // Test projects section
+            const projectCards = doc.querySelectorAll('.project-card');
+            logTest('Project Cards', projectCards.length >= 6, `Found ${projectCards.length} project cards`);
+            
+            // Test skills section
+            const skillCategories = doc.querySelectorAll('.skill-category');
+            logTest('Skill Categories', skillCategories.length >= 6, `Found ${skillCategories.length} skill categories`);
+            
+            // Test statistics
+            const statNumbers = doc.querySelectorAll('.stat-number');
+            logTest('Statistics Present', statNumbers.length >= 3, 'Statistics counters found');
+        }
+
+        function testCSS(doc) {
+            // Test CSS file loading
+            const mainCSS = doc.querySelector('link[href="css/main.css"]');
+            logTest('Main CSS Loaded', mainCSS !== null, 'Main CSS file linked');
+            
+            const responsiveCSS = doc.querySelector('link[href="css/responsive.css"]');
+            logTest('Responsive CSS Loaded', responsiveCSS !== null, 'Responsive CSS file linked');
+            
+            // Test Font Awesome
+            const fontAwesome = doc.querySelector('link[href*="font-awesome"]');
+            logTest('Font Awesome Loaded', fontAwesome !== null, 'Font Awesome CSS loaded');
+            
+            // Test Google Fonts
+            const googleFonts = doc.querySelector('link[href*="fonts.googleapis.com"]');
+            logTest('Google Fonts Loaded', googleFonts !== null, 'Google Fonts loaded');
+        }
+
+        function testJavaScript(doc) {
+            // Test JavaScript file loading
+            const mainJS = doc.querySelector('script[src="js/main.js"]');
+            logTest('Main JS Loaded', mainJS !== null, 'Main JavaScript file loaded');
+            
+            const animationsJS = doc.querySelector('script[src="js/animations.js"]');
+            logTest('Animations JS Loaded', animationsJS !== null, 'Animations JavaScript file loaded');
+            
+            // Test hamburger menu functionality
+            const hamburger = doc.querySelector('.hamburger');
+            logTest('Hamburger Menu', hamburger !== null, 'Hamburger menu element found');
+        }
+
+        function testAccessibility(doc) {
+            // Test semantic HTML
+            const nav = doc.querySelector('nav');
+            logTest('Semantic Navigation', nav !== null, 'Semantic nav element used');
+            
+            const main = doc.querySelector('main') || doc.querySelector('section');
+            logTest('Main Content', main !== null, 'Main content structure present');
+            
+            const footer = doc.querySelector('footer');
+            logTest('Semantic Footer', footer !== null, 'Semantic footer element used');
+            
+            // Test headings hierarchy
+            const h1 = doc.querySelectorAll('h1');
+            logTest('H1 Heading', h1.length === 1, 'Single H1 heading found');
+            
+            const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            logTest('Heading Structure', headings.length >= 5, 'Proper heading hierarchy');
+            
+            // Test alt attributes for images
+            const images = doc.querySelectorAll('img');
+            let imagesWithAlt = 0;
+            images.forEach(img => {
+                if (img.hasAttribute('alt')) imagesWithAlt++;
+            });
+            logTest('Image Alt Attributes', images.length === 0 || imagesWithAlt === images.length, 'All images have alt attributes');
+            
+            // Test form labels
+            const inputs = doc.querySelectorAll('input, textarea');
+            let inputsWithLabels = 0;
+            inputs.forEach(input => {
+                if (input.hasAttribute('placeholder') || input.hasAttribute('aria-label')) {
+                    inputsWithLabels++;
+                }
+            });
+            logTest('Form Accessibility', inputs.length === 0 || inputsWithLabels === inputs.length, 'Form inputs have labels/placeholders');
+        }
+
+        function testPerformance(doc) {
+            // Test external resources
+            const externalLinks = doc.querySelectorAll('link[rel="preconnect"]');
+            logTest('DNS Preconnect', externalLinks.length >= 2, 'DNS preconnect optimization present');
+            
+            // Test CSS optimization
+            const inlineStyles = doc.querySelectorAll('style');
+            logTest('Inline Styles', inlineStyles.length === 0, 'No inline styles found (good for performance)');
+            
+            // Test script loading
+            const scripts = doc.querySelectorAll('script[src]');
+            const scriptsAtEnd = Array.from(scripts).every(script => {
+                return script.parentElement.tagName === 'BODY';
+            });
+            logTest('Script Loading', scriptsAtEnd, 'Scripts loaded at end of body');
+        }
+
+        function testResponsiveDesign(doc) {
+            // Test viewport meta tag
+            const viewport = doc.querySelector('meta[name="viewport"]');
+            const viewportContent = viewport ? viewport.getAttribute('content') : '';
+            logTest('Responsive Viewport', viewportContent.includes('width=device-width'), 'Responsive viewport configuration');
+            
+            // Test responsive elements
+            const hamburger = doc.querySelector('.hamburger');
+            logTest('Mobile Navigation', hamburger !== null, 'Mobile hamburger menu present');
+            
+            // Test CSS Grid/Flexbox usage (check for modern layout classes)
+            const gridElements = doc.querySelectorAll('.projects-grid, .skills-grid');
+            logTest('Modern CSS Layout', gridElements.length >= 2, 'CSS Grid/Flexbox layout detected');
+        }
+
+        // Auto-run tests on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>

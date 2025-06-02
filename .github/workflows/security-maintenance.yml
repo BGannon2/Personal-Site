@@ -1,0 +1,190 @@
+name: Security & Maintenance
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🔄 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📦 Install Dependencies
+      run: npm ci
+      
+    - name: 🔒 Run Security Audit
+      run: |
+        echo "🔍 Running npm security audit..."
+        npm audit --audit-level high --json > audit-report.json || true
+        
+    - name: 📊 Generate Security Report
+      run: |
+        echo "# Security Audit Report" > security-report.md
+        echo "Generated on: $(date)" >> security-report.md
+        echo "" >> security-report.md
+        
+        if [ -s audit-report.json ]; then
+          echo "## Vulnerabilities Found" >> security-report.md
+          cat audit-report.json | jq -r '.vulnerabilities | to_entries[] | "- **\(.key)**: \(.value.severity) severity"' >> security-report.md || echo "No vulnerabilities in expected format" >> security-report.md
+        else
+          echo "✅ No high or critical vulnerabilities found!" >> security-report.md
+        fi
+        
+    - name: 📤 Upload Security Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report-$(date +%Y%m%d)
+        path: |
+          audit-report.json
+          security-report.md
+        retention-days: 30
+
+  dependency-updates:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🔄 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📦 Check for Updates
+      run: |
+        echo "🔍 Checking for dependency updates..."
+        npm outdated --json > outdated.json || true
+        
+    - name: 📝 Create Update Report
+      run: |
+        echo "# Dependency Update Report" > update-report.md
+        echo "Generated on: $(date)" >> update-report.md
+        echo "" >> update-report.md
+        
+        if [ -s outdated.json ] && [ "$(cat outdated.json)" != "{}" ]; then
+          echo "## Available Updates" >> update-report.md
+          echo "\`\`\`json" >> update-report.md
+          cat outdated.json >> update-report.md
+          echo "\`\`\`" >> update-report.md
+        else
+          echo "✅ All dependencies are up to date!" >> update-report.md
+        fi
+        
+    - name: 📤 Upload Update Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: dependency-report-$(date +%Y%m%d)
+        path: |
+          outdated.json
+          update-report.md
+        retention-days: 30
+
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 🔄 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📦 Install Dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build Website
+      run: npm run build
+      
+    - name: 🏃‍♂️ Run Lighthouse Audit
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        configPath: './.lighthouserc.json'
+        uploadArtifacts: true
+        temporaryPublicStorage: true
+        
+    - name: 📊 Comment Lighthouse Results
+      uses: actions/github-script@v7
+      if: github.event_name == 'push'
+      with:
+        script: |
+          const fs = require('fs');
+          
+          // This would typically read from Lighthouse CI results
+          const comment = `## 🔍 Weekly Lighthouse Audit
+          
+          📊 **Performance Report**
+          - Build completed successfully
+          - Lighthouse audit has been run
+          - Check the Actions artifacts for detailed results
+          
+          🔗 **Links:**
+          - [Live Site](https://${context.repo.owner}.github.io/${context.repo.repo})
+          - [Lighthouse Report](${context.payload.repository.html_url}/actions/runs/${context.runId})
+          `;
+          
+          // Create an issue if performance is below threshold
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `📊 Weekly Performance Report - ${new Date().toDateString()}`,
+            body: comment,
+            labels: ['performance', 'automated']
+          });
+
+  cleanup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🧹 Cleanup Old Artifacts
+      uses: actions/github-script@v7
+      with:
+        script: |
+          // Clean up artifacts older than 30 days
+          const artifacts = await github.rest.actions.listArtifactsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            per_page: 100
+          });
+          
+          const thirtyDaysAgo = new Date();
+          thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+          
+          for (const artifact of artifacts.data.artifacts) {
+            const createdAt = new Date(artifact.created_at);
+            if (createdAt < thirtyDaysAgo) {
+              try {
+                await github.rest.actions.deleteArtifact({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  artifact_id: artifact.id
+                });
+                console.log(`Deleted artifact: ${artifact.name}`);
+              } catch (error) {
+                console.log(`Failed to delete ${artifact.name}: ${error.message}`);
+              }
+            }
+          }

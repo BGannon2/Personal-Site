@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brendan Gannon - Principal Lead DevOps Engineer</title>
+    <meta name="description" content="Principal Lead DevOps Engineer with over a decade of experience in cloud infrastructure, CI/CD pipelines, and automation.">
+    <meta name="keywords" content="DevOps, Brendan Gannon, AWS, Kubernetes, Docker, Terraform, Jenkins, Cloud Infrastructure">
+    <meta property="og:title" content="Brendan Gannon - Principal Lead DevOps Engineer">
+    <meta property="og:description" content="Principal Lead DevOps Engineer specializing in cloud platforms, containerization, and automation solutions.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h3>Brendan Gannon</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Principal Lead DevOps Engineer</span>
+                </h1>
+                <p class="hero-subtitle">Proven track record in guiding cross-team DevSecOps initiative, architecting large-scale infrastructure models, enhancing deployment efficiency + reliability through automation</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="code-content">
+                        <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: nginx:latest
+        ports:
+        - containerPort: 80</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">Hello! I'm Brendan Gannon, a Principal Lead DevOps Engineer with over a decade of experience in guiding cross-team DevSecOps initiatives and architecting large-scale infrastructure models. I specialize in enhancing deployment efficiency and reliability through automation, while fostering a culture of shared responsibility across development and operations teams.</p>
+                    
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <h3><i class="fas fa-user-tie"></i> Professional Experience</h3>
+                            <p>Currently serving as Principal Lead DevOps Engineer at Space Telescope Science Institute in Baltimore, MD, where I guide cross-team DevSecOps initiatives and architect large-scale infrastructure. Previously worked at Softrams, Cambridge Semantics Inc., Phoenix Group, and General Dynamics Information Technology.</p>
+                        </div>
+                        
+                        <div class="detail-item">
+                            <h3><i class="fas fa-graduation-cap"></i> Education & Certifications</h3>
+                            <p>Bachelor's Degree in Information Technology from Towson University. AWS Certified Cloud Practitioner and SAFe 5 DevOps Practitioner certified by Scaled Agile, Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <h3 class="stat-number" data-target="10">0</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number" data-target="15">0</h3>
+                        <p>Active Projects</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 class="stat-number" data-target="99">0</h3>
+                        <p>Uptime Achieved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fab fa-aws"></i> Cloud Platforms</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">GCP</span>
+                        <span class="skill-tag">ElasticSearch</span>
+                        <span class="skill-tag">Tableau</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fab fa-docker"></i> Containerization & Orchestration</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">Rancher</span>
+                        <span class="skill-tag">Dockerhub</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-code-branch"></i> CI/CD & Automation</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">GitHub Actions</span>
+                        <span class="skill-tag">GitLab CI</span>
+                        <span class="skill-tag">Apache Airflow</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-server"></i> Infrastructure as Code</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Terraform</span>
+                        <span class="skill-tag">Ansible</span>
+                        <span class="skill-tag">Conda</span>
+                        <span class="skill-tag">CloudFormation</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-chart-line"></i> Monitoring & Analytics</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Datadog</span>
+                        <span class="skill-tag">HashiCorp Vault</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming & Scripting</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Bash</span>
+                        <span class="skill-tag">PyPI</span>
+                        <span class="skill-tag">Jupyter Notebooks</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Space Telescope Infrastructure Modernization</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Led cross-team DevSecOps initiatives at STScI, architecting large-scale infrastructure models for space telescope data processing and analysis systems, enhancing deployment efficiency through automation.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">Terraform</span>
+                        <span class="tech-tag">Jenkins</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Enterprise CI/CD Pipeline Architecture</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Designed and implemented comprehensive CI/CD pipelines at Softrams, reducing deployment time by 80% and eliminating manual errors through automation and Infrastructure as Code practices.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Jenkins</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">GitLab</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Cloud Migration & Optimization</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Led cloud migration initiatives at Cambridge Semantics and Phoenix Group, migrating legacy systems to AWS with improved scalability, security, and cost optimization.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Terraform</span>
+                        <span class="tech-tag">Ansible</span>
+                        <span class="tech-tag">CloudFormation</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>DevSecOps Integration Framework</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Implemented comprehensive DevSecOps practices integrating security scanning, compliance monitoring, and automated testing into CI/CD pipelines across multiple enterprise environments.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Security</span>
+                        <span class="tech-tag">Monitoring</span>
+                        <span class="tech-tag">Compliance</span>
+                        <span class="tech-tag">Automation</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Container Orchestration Platform</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Built enterprise-grade container orchestration platform using Kubernetes with automated scaling, monitoring, and deployment strategies for high-availability applications.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Kubernetes</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Helm</span>
+                        <span class="tech-tag">Prometheus</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Infrastructure Monitoring & Analytics</h3>
+                        <div class="project-links">
+                            <a href="https://github.com/BGannon2" class="project-link" target="_blank"><i class="fab fa-github"></i><span class="sr-only">View project on GitHub</span></a>
+                        </div>
+                    </div>
+                    <p>Implemented comprehensive monitoring and analytics solutions using modern observability tools, providing real-time insights into system performance and reliability metrics.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Grafana</span>
+                        <span class="tech-tag">Prometheus</span>
+                        <span class="tech-tag">ELK Stack</span>
+                        <span class="tech-tag">DataDog</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Work Together</h3>
+                    <p>I'm always interested in discussing new opportunities and challenging projects. Whether you need help with cloud migration, CI/CD implementation, or infrastructure optimization, let's connect!</p>
+                    
+                    <div class="contact-links">
+                        <a href="mailto:Brendan@BGannon.dev" class="contact-link">
+                            <i class="fas fa-envelope"></i>
+                            <span>Brendan@BGannon.dev</span>
+                        </a>
+                        <a href="tel:+12403461144" class="contact-link">
+                            <i class="fas fa-phone"></i>
+                            <span>(240) 346-1144</span>
+                        </a>
+                        <a href="https://github.com/BGannon2" class="contact-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub Profile</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/brendanrgannon/" class="contact-link" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn Profile</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Brendan Gannon. Built with passion for automation and reliability.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
