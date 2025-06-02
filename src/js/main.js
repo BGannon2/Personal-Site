@@ -1,4 +1,9 @@
 // Import CSS files
+import AnimationController from './animations.js';
+// Ensure animations (including counters) are initialized
+document.addEventListener('DOMContentLoaded', () => {
+    new AnimationController();
+});
 import '../css/main.css';
 import '../css/responsive.css';
 
