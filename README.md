@@ -1,5 +1,8 @@
 # DevOps Portfolio Website
 
+[![CI/CD Pipeline](https://github.com/BGannon2/Personal-Site/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/BGannon2/Personal-Site/actions/workflows/ci-cd.yml)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=flat&logo=github)](https://bgannon2.github.io/Personal-Site/)
+
 A modern, responsive portfolio website designed specifically for DevOps engineers to showcase their skills, projects, and experience. Built with clean HTML5, modern CSS3, and vanilla JavaScript for optimal performance and compatibility.
 
 ## ✨ Features

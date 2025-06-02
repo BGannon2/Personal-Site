@@ -66,6 +66,11 @@ jobs:
     - name: 🏗️ Build for Production
       run: npm run build
       
+    - name: ✅ Validate Build Artifacts
+      run: |
+        chmod +x scripts/validate-build.sh
+        ./scripts/validate-build.sh
+      
     - name: 📊 Generate Test Coverage Report
       run: |
         if [ -d "tests" ]; then
