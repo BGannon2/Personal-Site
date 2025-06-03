@@ -1,3 +1,9 @@
+      - name: Lighthouse Badger
+        uses: MyActionWay/lighthouse-badger-action@main
+        with:
+          urls: 'https://bgannon2.github.io/Personal-Site/'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # Job 4: Performance Testing (runs after deployment)
 name: Performance Test
 
@@ -7,7 +13,6 @@ on:
 jobs:
   performance-test:
     runs-on: ubuntu-latest
-    needs: deploy
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - name: 🔄 Checkout Repository

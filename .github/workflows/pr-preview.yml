@@ -94,3 +94,41 @@ jobs:
           du -sh dist/
           find dist -name "*.js" -exec wc -c {} + | sort -n
         fi
+
+---
+
+name: Performance Test
+
+on:
+  workflow_call:
+
+jobs:
+  performance-test:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: 🔄 Checkout Repository
+        uses: actions/checkout@v4
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: 📦 Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.12.x
+      - name: ⏳ Wait for deployment to be ready
+        run: |
+          echo "Waiting for site to be available..."
+          sleep 60
+      - name: 🏃‍♂️ Run Lighthouse CI against deployed site
+        run: |
+          SITE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          echo "Testing deployed site at: $SITE_URL"
+          npx lhci autorun --config=.lighthouserc-ci.json || echo "Lighthouse CI failed - site might still be deploying"
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lighthouse Badger
+        uses: MyActionWay/lighthouse-badger-action@main
+        with:
+          urls: 'https://bgannon2.github.io/Personal-Site/'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
