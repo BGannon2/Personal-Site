@@ -35,3 +35,18 @@ jobs:
           urls: 'https://bgannon2.github.io/Personal-Site/'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and Push Lighthouse Badges
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .lighthouseci/*.svg
+          if git diff --cached --quiet; then
+            echo "No badge changes to commit."
+          else
+            git commit -m "chore: update Lighthouse badge SVGs [skip ci]"
+            git push origin HEAD:main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
