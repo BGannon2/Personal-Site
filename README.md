@@ -22,16 +22,6 @@ Welcome to the personal portfolio of Brendan Gannon, Principal Lead DevOps Engin
   - Contact form with validation
 - **Enhanced UX**: Smooth scrolling, progress indicator, and mobile hamburger menu
 
-git clone https://github.com/yourusername/devops-portfolio-website.git
-npm install
-
-
-devops-portfolio-website/
-
-
-
-
-
 ## 🛠 Technologies Used
 
 - HTML5 & CSS3 (responsive, accessible, semantic)
@@ -43,15 +33,6 @@ devops-portfolio-website/
 ## 📱 Browser Support
 
 - Chrome, Firefox, Safari, Edge, and major mobile browsers
-
-
-
-
-
-
-
-
-
 
 MIT License
 
