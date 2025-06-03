@@ -1,10 +1,5 @@
-      - name: Lighthouse Badger
-        uses: MyActionWay/lighthouse-badger-action@main
-        with:
-          urls: 'https://bgannon2.github.io/Personal-Site/'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# Job 4: Performance Testing (runs after deployment)
+---
+
 name: Performance Test
 
 on:
@@ -34,3 +29,9 @@ jobs:
           npx lhci autorun --config=.lighthouserc-ci.json || echo "Lighthouse CI failed - site might still be deploying"
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lighthouse Badger
+        uses: MyActionWay/lighthouse-badger-action@main
+        with:
+          urls: 'https://bgannon2.github.io/Personal-Site/'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
