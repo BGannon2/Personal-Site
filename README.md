@@ -4,6 +4,11 @@
 [![CI/CD Pipeline](https://github.com/BGannon2/Personal-Site/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/BGannon2/Personal-Site/actions/workflows/ci-cd.yml)
 [![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=flat&logo=github)](https://bgannon2.github.io/Personal-Site/)
 
+[![Lighthouse Performance](./.lighthouseci/performance.svg)](https://bgannon2.github.io/Personal-Site/)
+[![Lighthouse Accessibility](./.lighthouseci/accessibility.svg)](https://bgannon2.github.io/Personal-Site/)
+[![Lighthouse Best Practices](./.lighthouseci/best-practices.svg)](https://bgannon2.github.io/Personal-Site/)
+[![Lighthouse SEO](./.lighthouseci/seo.svg)](https://bgannon2.github.io/Personal-Site/)
+
 Welcome to the personal portfolio of Brendan Gannon, Principal Lead DevOps Engineer. This site showcases my professional experience, technical skills, featured projects, and certifications. Built with modern HTML5, CSS3, and JavaScript for performance, accessibility, and responsive design.
 
 ## ✨ Features
