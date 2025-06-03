@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Pipeline Challenge | Brendan Gannon</title>
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/responsive.css">
+    <link rel="stylesheet" href="src/css/game.css">
+    <link rel="shortcut icon" href="src/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="nav-logo">Brendan<span>Gannon</span></a>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="src/index.html#about" class="nav-link">About</a></li>
+                    <li><a href="src/index.html#skills" class="nav-link">Skills</a></li>
+                    <li><a href="src/index.html#projects" class="nav-link">Projects</a></li>
+                    <li><a href="src/index.html#contact" class="nav-link">Contact</a></li>
+                    <li><a href="game.html" class="nav-link active">Play Game</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Game Container -->
+    <section class="game-section">
+        <div class="container">
+            <div class="game-header">
+                <h1>DevOps Pipeline Challenge</h1>
+                <p>Build, deploy and troubleshoot your way through the DevOps lifecycle</p>
+            </div>
+
+            <div class="game-container">
+                <div class="game-info">
+                    <div class="game-stats">
+                        <div class="game-score">Score: <span id="score">0</span></div>
+                        <div class="game-level">Level: <span id="level">1</span></div>
+                        <div class="game-timer">Time: <span id="timer">60</span>s</div>
+                    </div>
+                    <div class="game-controls">
+                        <button id="start-button" class="btn">Start Game</button>
+                        <button id="reset-button" class="btn" disabled>Reset</button>
+                    </div>
+                </div>
+
+                <div class="game-board">
+                    <div class="game-instruction" id="instruction">
+                        <h3>Welcome to DevOps Pipeline Challenge!</h3>
+                        <p>Order the pipeline steps correctly, deploy infrastructure, and fix production issues.</p>
+                        <p>Press Start to begin!</p>
+                    </div>
+                    
+                    <div id="pipeline-area" class="pipeline-area">
+                        <!-- Pipeline steps will go here -->
+                    </div>
+                    
+                    <div id="deployment-area" class="deployment-area">
+                        <!-- Infrastructure components will go here -->
+                    </div>
+                    
+                    <div id="issues-area" class="issues-area">
+                        <!-- Production issues will appear here -->
+                    </div>
+                    
+                    <div class="game-message" id="game-message"></div>
+                </div>
+            </div>
+            
+            <div class="game-explanation">
+                <h2>DevOps Concepts Demonstrated</h2>
+                <div class="game-concepts">
+                    <div class="concept">
+                        <h3>CI/CD Pipeline</h3>
+                        <p>The game demonstrates the continuous integration/continuous deployment workflow that forms the backbone of modern DevOps practices.</p>
+                    </div>
+                    <div class="concept">
+                        <h3>Infrastructure as Code</h3>
+                        <p>The deployment phase shows how infrastructure components are defined, orchestrated and deployed programmatically.</p>
+                    </div>
+                    <div class="concept">
+                        <h3>Incident Response</h3>
+                        <p>The troubleshooting phase simulates real-world production issues that DevOps engineers must quickly identify and resolve.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Brendan Gannon. All rights reserved.</p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/BGannon2" target="_blank" aria-label="GitHub Profile">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/brendanrgannon/" target="_blank" aria-label="LinkedIn Profile">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/3b4d3cf6b3.js" crossorigin="anonymous"></script>
+    
+    <!-- Game Scripts -->
+    <script src="src/js/main.js"></script>
+    <script src="src/js/game.js"></script>
+</body>
+</html>
