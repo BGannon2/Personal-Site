@@ -19,7 +19,7 @@
     "validate:js": "eslint src/js/*.js"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.0",
+    "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.40.0",
     "eslint": "^8.55.0",
     "html-validate": "^8.7.0",
