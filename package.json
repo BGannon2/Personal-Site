@@ -21,7 +21,7 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "webpack": "^5.0.0",
+    "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"
   },
